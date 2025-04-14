@@ -1,4 +1,3 @@
-
 export type Direction = "up" | "down" | "left" | "right" | null;
 export type AnimationType = "fade" | "scale" | "slide" | "bounce" | "pulse" | null;
 
@@ -8,14 +7,22 @@ export function createRevealClass(
   direction: Direction = null, 
   type: AnimationType = null
 ): string {
-  let baseClass = "reveal";
+  let baseClass = "reveal opacity-0 transition-all duration-500 ease-out";
   
-  if (direction) {
-    baseClass += ` reveal-${direction}`;
+  if (direction === "up") {
+    baseClass += " translate-y-8";
+  } else if (direction === "down") {
+    baseClass += " -translate-y-8";
+  } else if (direction === "left") {
+    baseClass += " -translate-x-8";
+  } else if (direction === "right") {
+    baseClass += " translate-x-8";
   }
 
-  if (type) {
-    baseClass += ` reveal-${type}`;
+  if (type === "scale") {
+    baseClass += " scale-95";
+  } else if (type === "fade") {
+    baseClass += " opacity-0";
   }
   
   if (delay > 0) {
