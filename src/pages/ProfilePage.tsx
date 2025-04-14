@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { ForumNavigation } from "@/components/forum-navigation";
@@ -80,36 +79,36 @@ const ProfileHeader = ({ user }: { user: typeof mockUser }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   
   return (
-    <>
-      {/* Cover Image */}
+    <div className="animate-fade-in">
+      {/* Cover Image with responsive height */}
       <div 
-        className="h-64 w-full bg-cover bg-center"
+        className="h-48 md:h-64 w-full bg-cover bg-center relative"
         style={{ backgroundImage: `url(${user.coverImage})` }}
       >
-        <div className="bg-gradient-to-t from-navy to-transparent h-full w-full">
+        <div className="absolute inset-0 bg-gradient-to-t from-navy to-transparent">
           <div className="container mx-auto px-4 h-full flex items-end pb-4">
             <div className="flex items-end">
               <img 
                 src={user.avatarUrl}
                 alt={user.name}
-                className="w-32 h-32 rounded-full border-4 border-navy object-cover z-10 transform -mb-16 shadow-lg"
+                className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-navy object-cover z-10 transform -mb-12 md:-mb-16 shadow-lg transition-transform hover:scale-105"
               />
             </div>
           </div>
         </div>
       </div>
       
-      {/* Profile Info */}
-      <div className="container mx-auto px-4 pt-20">
-        <div className="flex flex-col md:flex-row justify-between items-start mb-8">
-          <div className="animate-fade-in">
-            <h1 className="text-3xl font-bold">{user.name}</h1>
-            <p className="text-blue flex items-center">
+      {/* Profile Info with responsive padding and layout */}
+      <div className="container mx-auto px-4 pt-16 md:pt-20">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-8 mb-8">
+          <div className="animate-fade-in-up [animation-delay:200ms]">
+            <h1 className="text-2xl md:text-3xl font-bold">{user.name}</h1>
+            <p className="text-blue flex items-center flex-wrap gap-2">
               @{user.username}
-              <span className="inline-flex ml-2 text-xs bg-blue/20 text-blue px-2 py-1 rounded-full">Pro Member</span>
+              <span className="inline-flex text-xs bg-blue/20 text-blue px-2 py-1 rounded-full">Pro Member</span>
             </p>
             
-            <div className="flex items-center flex-wrap gap-4 mt-2 text-gray-400 text-sm">
+            <div className="flex items-center flex-wrap gap-3 mt-2 text-gray-400 text-sm">
               {user.location && (
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 mr-1" />
@@ -134,7 +133,7 @@ const ProfileHeader = ({ user }: { user: typeof mockUser }) => {
             </div>
           </div>
           
-          <div className="flex mt-4 md:mt-0 gap-3 animate-fade-in">
+          <div className="flex flex-wrap gap-3 animate-fade-in-up [animation-delay:400ms]">
             <ButtonGradient 
               onClick={() => setIsFollowing(!isFollowing)} 
               className={cn(isFollowing ? "bg-navy-light text-white border border-white/20" : "")}
@@ -153,16 +152,16 @@ const ProfileHeader = ({ user }: { user: typeof mockUser }) => {
           </div>
         </div>
         
-        <p className="text-gray-300 mb-6 max-w-3xl animate-fade-in">{user.bio}</p>
+        <p className="text-gray-300 mb-6 max-w-3xl animate-fade-in-up [animation-delay:600ms]">{user.bio}</p>
       </div>
-    </>
+    </div>
   );
 };
 
-// New component for profile stats
 const ProfileStats = ({ user }: { user: typeof mockUser }) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 animate-fade-in">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      {/* Stats cards with hover animation */}
       <div className="bg-card rounded-lg p-4 text-center hover:bg-muted/20 transition-colors card-hover">
         <Award className="w-6 h-6 mx-auto mb-2 text-gold" />
         <div className="text-2xl font-bold">{user.reputation}</div>
@@ -189,7 +188,7 @@ const ProfileStats = ({ user }: { user: typeof mockUser }) => {
 
 const ProfileBadges = ({ badges }: { badges: typeof mockUser.badges }) => {
   return badges && badges.length > 0 ? (
-    <div className="mb-8 animate-fade-in">
+    <div className="mb-8 animate-fade-in-up [animation-delay:800ms]">
       <h2 className="text-xl font-semibold mb-4 flex items-center">
         Badges
         <span className="text-sm ml-2 text-gray-400">({badges.length})</span>
@@ -214,61 +213,62 @@ const ProfileBadges = ({ badges }: { badges: typeof mockUser.badges }) => {
 
 const ProfilePage = () => {
   const { username } = useParams<{ username?: string }>();
-  const user = mockUser; // In a real app, you would fetch user data based on username
+  const user = mockUser;
   
   return (
     <div className="min-h-screen bg-navy text-white">
       <ForumNavigation />
       
-      <ProfileHeader user={user} />
-      
-      <div className="container mx-auto px-4">
-        <ProfileStats user={user} />
+      <div className="animate-fade-in">
+        <ProfileHeader user={user} />
         
-        <ProfileBadges badges={user.badges} />
-        
-        {/* Content Tabs */}
-        <Tabs defaultValue="threads" className="mb-16 animate-fade-in">
-          <TabsList className="mb-6 bg-card/50 p-1">
-            <TabsTrigger value="threads" className="data-[state=active]:bg-blue/20">Threads</TabsTrigger>
-            <TabsTrigger value="replies" className="data-[state=active]:bg-blue/20">Replies</TabsTrigger>
-            <TabsTrigger value="bookmarks" className="data-[state=active]:bg-blue/20">Bookmarks</TabsTrigger>
-            <TabsTrigger value="activity" className="data-[state=active]:bg-blue/20">Activity</TabsTrigger>
-          </TabsList>
+        <div className="container mx-auto px-4">
+          <ProfileStats user={user} />
+          <ProfileBadges badges={user.badges} />
           
-          <TabsContent value="threads" className="space-y-4">
-            {userThreads.map(thread => (
-              <Thread key={thread.id} {...thread} />
-            ))}
-            <div className="flex justify-center mt-8">
-              <ButtonGradient variant="outline">Load More</ButtonGradient>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="replies">
-            <div className="bg-card rounded-lg p-8 text-center border border-white/5">
-              <Bookmark className="w-12 h-12 mx-auto mb-4 text-gray-500 opacity-50" />
-              <p className="text-gray-400 mb-4">No replies yet.</p>
-              <ButtonGradient size="sm">Browse Discussions</ButtonGradient>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="bookmarks">
-            <div className="bg-card rounded-lg p-8 text-center border border-white/5">
-              <Bookmark className="w-12 h-12 mx-auto mb-4 text-gray-500 opacity-50" />
-              <p className="text-gray-400 mb-4">No bookmarks yet.</p>
-              <ButtonGradient size="sm">Explore Threads</ButtonGradient>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="activity">
-            <div className="bg-card rounded-lg p-8 text-center border border-white/5">
-              <Users className="w-12 h-12 mx-auto mb-4 text-gray-500 opacity-50" />
-              <p className="text-gray-400 mb-4">No recent activity.</p>
-              <ButtonGradient size="sm">Engage with Community</ButtonGradient>
-            </div>
-          </TabsContent>
-        </Tabs>
+          {/* Content Tabs with smooth transitions */}
+          <Tabs defaultValue="threads" className="mb-16">
+            <TabsList className="mb-6 bg-card/50 p-1 overflow-x-auto flex whitespace-nowrap scrollbar-none">
+              <TabsTrigger value="threads" className="data-[state=active]:bg-blue/20">Threads</TabsTrigger>
+              <TabsTrigger value="replies" className="data-[state=active]:bg-blue/20">Replies</TabsTrigger>
+              <TabsTrigger value="bookmarks" className="data-[state=active]:bg-blue/20">Bookmarks</TabsTrigger>
+              <TabsTrigger value="activity" className="data-[state=active]:bg-blue/20">Activity</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="threads" className="space-y-4">
+              {userThreads.map(thread => (
+                <Thread key={thread.id} {...thread} />
+              ))}
+              <div className="flex justify-center mt-8">
+                <ButtonGradient variant="outline">Load More</ButtonGradient>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="replies">
+              <div className="bg-card rounded-lg p-8 text-center border border-white/5">
+                <Bookmark className="w-12 h-12 mx-auto mb-4 text-gray-500 opacity-50" />
+                <p className="text-gray-400 mb-4">No replies yet.</p>
+                <ButtonGradient size="sm">Browse Discussions</ButtonGradient>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="bookmarks">
+              <div className="bg-card rounded-lg p-8 text-center border border-white/5">
+                <Bookmark className="w-12 h-12 mx-auto mb-4 text-gray-500 opacity-50" />
+                <p className="text-gray-400 mb-4">No bookmarks yet.</p>
+                <ButtonGradient size="sm">Explore Threads</ButtonGradient>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="activity">
+              <div className="bg-card rounded-lg p-8 text-center border border-white/5">
+                <Users className="w-12 h-12 mx-auto mb-4 text-gray-500 opacity-50" />
+                <p className="text-gray-400 mb-4">No recent activity.</p>
+                <ButtonGradient size="sm">Engage with Community</ButtonGradient>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
       
       <ForumFooter />
