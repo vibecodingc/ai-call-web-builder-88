@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { threads, posts } from "@/lib/mock-data";
 import { CardPost } from "@/components/ui/card-post";
 import { createRevealClass } from "@/lib/animation";
+import { AnimatedDashboardBackground } from "@/components/ui/animated-dashboard-background";
 
 export function ForumRecentActivitySection() {
   // Sort threads and posts by date
@@ -19,7 +20,7 @@ export function ForumRecentActivitySection() {
 
   return (
     <section className="py-16 px-6" id="recent-activity">
-      <div className="container mx-auto">
+      <AnimatedDashboardBackground className="mx-auto max-w-7xl p-8">
         <SectionHeading 
           title="Recent Activity" 
           subtitle="Stay up to date with the latest discussions and replies"
@@ -57,7 +58,7 @@ export function ForumRecentActivitySection() {
             </div>
           </TabsContent>
         </Tabs>
-      </div>
+      </AnimatedDashboardBackground>
     </section>
   );
 }
