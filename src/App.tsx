@@ -1,4 +1,3 @@
-
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -7,6 +6,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { NotificationsProvider } from "@/hooks/use-notifications";
+import { useNotificationService } from "@/hooks/use-notification-service";
+
+function NotificationServiceWrapper({ children }: { children: React.ReactNode }) {
+  useNotificationService();
+  return <>{children}</>;
+}
 
 // Lazy loaded components with proper error handling
 const Index = lazy(() => import("./pages/Index"));
@@ -34,29 +39,31 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <NotificationsProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Suspense fallback={
-              <div className="flex h-screen w-screen items-center justify-center bg-navy">
-                <div className="text-blue animate-pulse text-xl font-bold">Loading...</div>
-              </div>
-            }>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/thread/:threadId" element={<ThreadPage />} />
-                <Route path="/create" element={<CreateThread />} />
-                <Route path="/bookmarks" element={<BookmarksPage />} />
-                <Route path="/profile/:username" element={<ProfilePage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/categories" element={<CategoriesPage />} />
-                <Route path="/popular" element={<PopularPage />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </TooltipProvider>
+        <NotificationServiceWrapper>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Suspense fallback={
+                <div className="flex h-screen w-screen items-center justify-center bg-navy">
+                  <div className="text-blue animate-pulse text-xl font-bold">Loading...</div>
+                </div>
+              }>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/thread/:threadId" element={<ThreadPage />} />
+                  <Route path="/create" element={<CreateThread />} />
+                  <Route path="/bookmarks" element={<BookmarksPage />} />
+                  <Route path="/profile/:username" element={<ProfilePage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/categories" element={<CategoriesPage />} />
+                  <Route path="/popular" element={<PopularPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </BrowserRouter>
+          </TooltipProvider>
+        </NotificationServiceWrapper>
       </NotificationsProvider>
     </ThemeProvider>
   </QueryClientProvider>

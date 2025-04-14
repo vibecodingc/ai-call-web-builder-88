@@ -1,9 +1,9 @@
-
 import React, { useState } from "react";
 import { ButtonGradient } from "./button-gradient";
 import { Image, Smile, AtSign, Hash, Paperclip } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useNotifications } from "@/hooks/use-notifications";
 
 export function ThreadCreator() {
   const [content, setContent] = useState("");
@@ -12,6 +12,7 @@ export function ThreadCreator() {
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { addNotification } = useNotifications();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -60,10 +61,28 @@ export function ThreadCreator() {
         description: "Your thread has been posted.",
       });
 
-      // If we're on the create page, navigate back to home
-      if (window.location.pathname === "/create") {
-        navigate("/");
-      }
+      // Add a notification for the new post
+      addNotification({
+        type: "post",
+        read: false,
+        userId: "user-1",
+        actionUserId: "user-1",
+        actionUser: {
+          id: "user-1",
+          name: "Current User",
+          username: "currentuser",
+          avatarUrl: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=80&q=80",
+          joinDate: new Date(),
+          postCount: 1
+        },
+        contentId: newThread.id,
+        contentType: "thread",
+        message: "created a new thread",
+        link: `/profile/currentuser`
+      });
+
+      // Redirect to profile page
+      navigate("/profile/currentuser");
     }, 1000);
   };
 

@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { ButtonGradient } from "@/components/ui/button-gradient";
 import { cn } from "@/lib/utils";
-import { MessageSquare, Menu, X, Sun, Moon } from "lucide-react";
+import { MessageSquare, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useTheme } from "@/contexts/ThemeContext";
 import { NotificationsDropdown } from "@/components/ui/notifications-dropdown";
 
 const menuItems = [
@@ -17,7 +15,6 @@ const menuItems = [
 export function ForumNavigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,14 +56,6 @@ export function ForumNavigation() {
           </ul>
           
           <div className="flex items-center gap-4 pl-4 border-l border-white/10">
-            <button 
-              className="text-gray-300 hover:text-white transition-colors"
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-            
             <NotificationsDropdown />
             
             <Link to="/profile" className="flex items-center">
@@ -85,14 +74,6 @@ export function ForumNavigation() {
 
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="p-2 text-gray-300"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
-          
           <NotificationsDropdown />
           
           <button
