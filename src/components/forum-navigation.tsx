@@ -2,15 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { ButtonGradient } from "@/components/ui/button-gradient";
 import { cn } from "@/lib/utils";
-import { MessageSquare, Menu, X, Bell, Search, User } from "lucide-react";
+import { MessageSquare, Menu, X, Bell } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const menuItems = [
-  { name: "Forum", href: "/" },
-  { name: "Categories", href: "/categories" },
-  { name: "Recent", href: "/recent" },
+  { name: "Home", href: "/" },
   { name: "Popular", href: "/popular" },
-  { name: "Members", href: "/members" },
+  { name: "Bookmarks", href: "/bookmarks" },
 ];
 
 export function ForumNavigation() {
@@ -36,9 +34,9 @@ export function ForumNavigation() {
       )}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <MessageSquare className="w-8 h-8 text-blue mr-2" />
-          <span className="font-bold text-xl">ForumHub</span>
+        <Link to="/" className="flex items-center group">
+          <MessageSquare className="w-8 h-8 text-blue mr-2 group-hover:text-blue-light transition-colors" />
+          <span className="font-bold text-xl group-hover:text-blue-light transition-colors">ForumHub</span>
         </Link>
 
         {/* Desktop menu */}
@@ -57,15 +55,9 @@ export function ForumNavigation() {
           </ul>
           
           <div className="flex items-center gap-4 pl-4 border-l border-white/10">
-            <button className="text-gray-300 hover:text-white">
-              <Search className="w-5 h-5" />
-            </button>
-            <button className="text-gray-300 hover:text-white relative">
+            <button className="text-gray-300 hover:text-white relative group">
               <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 bg-blue rounded-full w-4 h-4 text-xs flex items-center justify-center">3</span>
-            </button>
-            <button className="text-gray-300 hover:text-white">
-              <User className="w-5 h-5" />
+              <span className="absolute -top-1 -right-1 bg-blue rounded-full w-4 h-4 text-xs flex items-center justify-center group-hover:bg-blue-light transition-colors">3</span>
             </button>
           </div>
           
@@ -76,13 +68,6 @@ export function ForumNavigation() {
 
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center gap-4">
-          <button className="text-gray-300 hover:text-white">
-            <Search className="w-5 h-5" />
-          </button>
-          <button className="text-gray-300 hover:text-white relative">
-            <Bell className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 bg-blue rounded-full w-4 h-4 text-xs flex items-center justify-center">3</span>
-          </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-white p-2"
@@ -96,7 +81,7 @@ export function ForumNavigation() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Simplified mobile menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-navy-light fixed inset-x-0 top-16 p-6 z-40 animate-fade-in">
           <ul className="flex flex-col space-y-4 mb-6">
@@ -112,15 +97,9 @@ export function ForumNavigation() {
               </li>
             ))}
           </ul>
-          <div className="flex flex-col gap-4">
-            <Link to="/create" onClick={() => setMobileMenuOpen(false)}>
-              <ButtonGradient className="w-full">New Thread</ButtonGradient>
-            </Link>
-            <button className="text-gray-300 hover:text-white flex items-center gap-2 p-2">
-              <User className="w-5 h-5" />
-              <span>Profile</span>
-            </button>
-          </div>
+          <Link to="/create" onClick={() => setMobileMenuOpen(false)}>
+            <ButtonGradient className="w-full">New Thread</ButtonGradient>
+          </Link>
         </div>
       )}
     </header>
