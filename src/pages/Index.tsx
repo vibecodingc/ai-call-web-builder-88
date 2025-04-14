@@ -1,15 +1,14 @@
 
 import React from "react";
-import { Navigation } from "@/components/navigation";
-import { HeroSection } from "@/components/hero-section";
-import { FeaturesSection } from "@/components/features-section";
-import { LanguagesSection } from "@/components/languages-section";
-import { UseCasesSection } from "@/components/use-cases-section";
-import { IntegrationSection } from "@/components/integration-section";
-import { PricingSection } from "@/components/pricing-section";
-import { FAQSection } from "@/components/faq-section";
-import { CTASection } from "@/components/cta-section";
-import { Footer } from "@/components/footer";
+import { ForumNavigation } from "@/components/forum-navigation";
+import { ForumHeroSection } from "@/components/forum-hero-section";
+import { ForumCategoriesSection } from "@/components/forum-categories-section";
+import { ForumPopularThreadsSection } from "@/components/forum-popular-threads-section";
+import { ForumRecentActivitySection } from "@/components/forum-recent-activity-section";
+import { ForumStatsSection } from "@/components/forum-stats-section";
+import { ForumCTASection } from "@/components/forum-cta-section";
+import { ForumFooter } from "@/components/forum-footer";
+import "../forum.css";
 
 const Index = () => {
   // Add intersection observer for animation
@@ -32,16 +31,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-navy text-white overflow-x-hidden">
-      <Navigation />
-      <HeroSection />
-      <FeaturesSection />
-      <LanguagesSection />
-      <UseCasesSection />
-      <IntegrationSection />
-      <PricingSection />
-      <FAQSection />
-      <CTASection />
-      <Footer />
+      <ForumNavigation />
+      <ForumHeroSection />
+      <ForumCategoriesSection />
+      <ForumStatsSection />
+      <ForumPopularThreadsSection />
+      <ForumRecentActivitySection />
+      <ForumCTASection />
+      <ForumFooter />
     </div>
   );
 };
