@@ -63,6 +63,26 @@ const initialThreads = [
 const Index = () => {
   const [threadFeed, setThreadFeed] = useState(initialThreads);
 
+  // Load threads from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedThreads = localStorage.getItem('forum-threads');
+      if (savedThreads) {
+        const parsedThreads = JSON.parse(savedThreads);
+        
+        // Make sure dates are properly converted back to Date objects
+        const processedThreads = parsedThreads.map((thread: any) => ({
+          ...thread,
+          createdAt: new Date(thread.createdAt)
+        }));
+        
+        setThreadFeed([...processedThreads, ...initialThreads]);
+      }
+    } catch (error) {
+      console.error('Failed to load threads from localStorage', error);
+    }
+  }, []);
+
   // Add a new thread to the feed (will be used by the ThreadCreator)
   const addNewThread = (thread: any) => {
     setThreadFeed(prevThreads => [thread, ...prevThreads]);

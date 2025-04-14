@@ -2,7 +2,8 @@
 import { useEffect } from 'react';
 import { useNotifications } from './use-notifications';
 
-const mockNotificationTypes = ['like', 'reply', 'mention'];
+// Only use the notification types that are allowed in the Notification type
+const mockNotificationTypes = ['like', 'reply', 'mention'] as const;
 const mockUsers = [
   {
     id: 'user-2',

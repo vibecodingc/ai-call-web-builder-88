@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { ButtonGradient } from "./button-gradient";
 import { Image, Smile, AtSign, Hash, Paperclip } from "lucide-react";
@@ -29,61 +30,66 @@ export function ThreadCreator() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call (in a real app, this would be an actual API request)
-    setTimeout(() => {
-      // Generate a mock thread
-      const newThread = {
-        id: `thread-${Date.now()}`,
-        author: {
-          name: "Current User",
-          avatar: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=80&q=80",
-          username: "currentuser",
-        },
-        content: content,
-        createdAt: new Date(),
-        likes: 0,
-        replies: 0,
-        images: imagePreviewUrls
-      };
+    // Generate a mock thread
+    const newThread = {
+      id: `thread-${Date.now()}`,
+      author: {
+        name: "Current User",
+        avatar: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=80&q=80",
+        username: "currentuser",
+      },
+      content: content,
+      createdAt: new Date(),
+      likes: 0,
+      replies: 0,
+      images: imagePreviewUrls
+    };
 
-      // In a real app, we would save the thread to a database
-      console.log("Thread created:", newThread);
-      
-      // Reset form
-      setContent("");
-      setImages([]);
-      setImagePreviewUrls([]);
-      setIsSubmitting(false);
-      
-      // Show success message
-      toast({
-        title: "Success!",
-        description: "Your thread has been posted.",
-      });
+    // In a real app, we would save the thread to a database
+    console.log("Thread created:", newThread);
+    
+    // Add the new thread to localStorage so it can be retrieved and displayed in the feed
+    try {
+      const existingThreads = JSON.parse(localStorage.getItem('forum-threads') || '[]');
+      localStorage.setItem('forum-threads', JSON.stringify([newThread, ...existingThreads]));
+    } catch (error) {
+      console.error('Failed to save thread to localStorage', error);
+    }
+    
+    // Reset form
+    setContent("");
+    setImages([]);
+    setImagePreviewUrls([]);
+    setIsSubmitting(false);
+    
+    // Show success message
+    toast({
+      title: "Success!",
+      description: "Your thread has been posted.",
+    });
 
-      // Add a notification for the new post
-      addNotification({
-        type: "post",
-        read: false,
-        userId: "user-1",
-        actionUserId: "user-1",
-        actionUser: {
-          id: "user-1",
-          name: "Current User",
-          username: "currentuser",
-          avatarUrl: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=80&q=80",
-          joinDate: new Date(),
-          postCount: 1
-        },
-        contentId: newThread.id,
-        contentType: "thread",
-        message: "created a new thread",
-        link: `/profile/currentuser`
-      });
+    // Add a notification for the new post - using a valid notification type
+    addNotification({
+      type: "mention", // Using a valid type from the allowed types
+      read: false,
+      userId: "user-1",
+      actionUserId: "user-1",
+      actionUser: {
+        id: "user-1",
+        name: "Current User",
+        username: "currentuser",
+        avatarUrl: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=80&q=80",
+        joinDate: new Date(),
+        postCount: 1
+      },
+      contentId: newThread.id,
+      contentType: "thread",
+      message: "created a new thread",
+      link: `/profile/currentuser`
+    });
 
-      // Redirect to profile page
-      navigate("/profile/currentuser");
-    }, 1000);
+    // Redirect to profile page
+    navigate("/profile/currentuser");
   };
 
   const removeImage = (index: number) => {
