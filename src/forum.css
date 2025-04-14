@@ -25,6 +25,14 @@
     @apply animate-pulse text-red-400;
   }
   
+  .reveal {
+    @apply opacity-0 transition-all duration-700 ease-out;
+  }
+  
+  .reveal.active {
+    @apply opacity-100 translate-x-0 translate-y-0;
+  }
+  
   .reveal-up {
     @apply translate-y-16;
   }
@@ -41,6 +49,77 @@
     @apply translate-x-16;
   }
   
+  .reveal-fade {
+    @apply opacity-0;
+  }
+  
+  .reveal-scale {
+    @apply scale-90 opacity-0;
+  }
+  
+  .reveal-bounce {
+    @apply -translate-y-4 opacity-0;
+  }
+  
+  .reveal-pulse {
+    @apply scale-95 opacity-0;
+  }
+  
+  .reveal.active.reveal-bounce {
+    @apply animate-[bounce_0.5s_ease-out];
+  }
+  
+  .reveal.active.reveal-pulse {
+    @apply animate-[pulse_2s_ease-in-out_infinite];
+  }
+  
+  /* Chat box animations */
+  .chat-box {
+    @apply bg-card rounded-xl border border-white/10 p-4 shadow-lg overflow-hidden;
+  }
+  
+  .chat-message {
+    @apply py-2 px-4 rounded-lg mb-3 max-w-[85%];
+  }
+  
+  .message-left {
+    @apply bg-muted/70 text-left self-start rounded-tl-none animate-fade-in;
+  }
+  
+  .message-right {
+    @apply bg-blue/20 text-right self-end rounded-tr-none animate-fade-in;
+  }
+  
+  .typing-indicator {
+    @apply flex space-x-1 p-2 items-center;
+  }
+  
+  .typing-dot {
+    @apply w-2 h-2 rounded-full bg-gray-400;
+    animation: typingAnimation 1.4s infinite ease-in-out;
+  }
+  
+  .typing-dot:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes typingAnimation {
+    0%, 60%, 100% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-4px);
+    }
+  }
+  
   .delay-500 {
     transition-delay: 0.5s;
   }
@@ -55,5 +134,40 @@
   
   .delay-2000 {
     transition-delay: 2s;
+  }
+  
+  .delay-2500 {
+    transition-delay: 2.5s;
+  }
+  
+  .delay-3000 {
+    transition-delay: 3s;
+  }
+  
+  /* New optimized animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px 0 rgba(59, 130, 246, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px 0 rgba(59, 130, 246, 0.8);
+    }
+  }
+  
+  .animate-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
   }
 }

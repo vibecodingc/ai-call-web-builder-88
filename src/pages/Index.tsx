@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { ForumNavigation } from "@/components/forum-navigation";
 import { ForumHeroSection } from "@/components/forum-hero-section";
 import { ForumCategoriesSection } from "@/components/forum-categories-section";
@@ -11,23 +11,38 @@ import { ForumFooter } from "@/components/forum-footer";
 import "../forum.css";
 
 const Index = () => {
-  // Add intersection observer for animation
-  React.useEffect(() => {
+  // Optimized intersection observer for animations
+  const setupAnimations = useCallback(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        // Add active class when element is in view
         if (entry.isIntersecting) {
-          entry.target.classList.add('active');
+          requestAnimationFrame(() => {
+            entry.target.classList.add('active');
+          });
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { 
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
     
-    document.querySelectorAll('.reveal').forEach(el => {
+    // Get all elements to be animated
+    const animatedElements = document.querySelectorAll('.reveal');
+    animatedElements.forEach(el => {
       observer.observe(el);
     });
     
     return () => observer.disconnect();
   }, []);
+
+  // Set up animations when component mounts
+  useEffect(() => {
+    // Small timeout to ensure DOM is fully rendered
+    const timeout = setTimeout(setupAnimations, 100);
+    return () => clearTimeout(timeout);
+  }, [setupAnimations]);
 
   return (
     <div className="min-h-screen bg-navy text-white overflow-x-hidden">
