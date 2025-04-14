@@ -75,7 +75,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				gold: '#ffc928', // Use the gold color defined in index.css
+				gold: '#ffc928',
 			},
 			fontFamily: {
 				sans: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif'],

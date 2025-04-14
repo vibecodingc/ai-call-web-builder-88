@@ -1,5 +1,5 @@
 
 .theme-light .theme-toggle::before {
   transform: translateX(6px);
-  background-color: #ffc928; // Direct color instead of @apply bg-gold
+  background-color: #ffc928;
 }
