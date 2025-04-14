@@ -83,12 +83,7 @@ const Index = () => {
     }
   }, []);
 
-  // Add a new thread to the feed (will be used by the ThreadCreator)
-  const addNewThread = (thread: any) => {
-    setThreadFeed(prevThreads => [thread, ...prevThreads]);
-  };
-
-  // Optimized intersection observer for animations
+  // Setup animations function
   const setupAnimations = useCallback(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {

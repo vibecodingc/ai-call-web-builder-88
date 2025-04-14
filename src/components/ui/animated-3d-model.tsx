@@ -4,6 +4,7 @@ import { OrbitControls, useGLTF } from '@react-three/drei';
 import { Suspense } from 'react';
 
 function Model() {
+  // Using a well-known 3D model that should load reliably
   const { scene } = useGLTF("https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/robot-playground/model.gltf");
   return <primitive object={scene} scale={2} position={[0, -2, 0]} />;
 }
