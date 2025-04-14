@@ -85,28 +85,34 @@ const IndexPage = () => {
 
   // Setup animations function
   const setupAnimations = useCallback(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // Add active class when element is in view
-        if (entry.isIntersecting) {
-          requestAnimationFrame(() => {
-            entry.target.classList.add('active');
-          });
-          observer.unobserve(entry.target);
-        }
+    try {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          // Add active class when element is in view
+          if (entry.isIntersecting) {
+            requestAnimationFrame(() => {
+              entry.target.classList.add('active');
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
       });
-    }, { 
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-    
-    // Get all elements to be animated
-    const animatedElements = document.querySelectorAll('.reveal');
-    animatedElements.forEach(el => {
-      observer.observe(el);
-    });
-    
-    return () => observer.disconnect();
+      
+      // Get all elements to be animated
+      const animatedElements = document.querySelectorAll('.reveal');
+      animatedElements.forEach(el => {
+        observer.observe(el);
+      });
+      
+      return () => observer.disconnect();
+    } catch (error) {
+      console.error('Animation setup error:', error);
+      // Return empty function as fallback
+      return () => {};
+    }
   }, []);
 
   // Set up animations when component mounts

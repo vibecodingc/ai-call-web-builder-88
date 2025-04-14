@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NotificationsProvider } from "@/hooks/use-notifications";
 import { useNotificationService } from "@/hooks/use-notification-service";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 function NotificationServiceWrapper({ children }: { children: React.ReactNode }) {
   useNotificationService();
@@ -43,23 +44,38 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Suspense fallback={
+            <ErrorBoundary fallback={
               <div className="flex h-screen w-screen items-center justify-center bg-navy">
-                <div className="text-blue animate-pulse text-xl font-bold">Loading...</div>
+                <div className="text-white p-8 rounded-lg border border-red-500">
+                  <h2 className="text-xl font-bold mb-4">Something went wrong</h2>
+                  <p>Sorry, an error occurred while rendering the page.</p>
+                  <button 
+                    onClick={() => window.location.reload()} 
+                    className="mt-4 bg-blue hover:bg-blue-light text-white px-4 py-2 rounded"
+                  >
+                    Reload page
+                  </button>
+                </div>
               </div>
             }>
-              <Routes>
-                <Route path="/" element={<IndexPage />} />
-                <Route path="/thread/:threadId" element={<ThreadPage />} />
-                <Route path="/create" element={<CreateThread />} />
-                <Route path="/bookmarks" element={<BookmarksPage />} />
-                <Route path="/profile/:username" element={<ProfilePage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/categories" element={<CategoriesPage />} />
-                <Route path="/popular" element={<PopularPage />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
+              <Suspense fallback={
+                <div className="flex h-screen w-screen items-center justify-center bg-navy">
+                  <div className="text-blue animate-pulse text-xl font-bold">Loading...</div>
+                </div>
+              }>
+                <Routes>
+                  <Route path="/" element={<IndexPage />} />
+                  <Route path="/thread/:threadId" element={<ThreadPage />} />
+                  <Route path="/create" element={<CreateThread />} />
+                  <Route path="/bookmarks" element={<BookmarksPage />} />
+                  <Route path="/profile/:username" element={<ProfilePage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/categories" element={<CategoriesPage />} />
+                  <Route path="/popular" element={<PopularPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
           </BrowserRouter>
         </TooltipProvider>
       </NotificationServiceWrapper>

@@ -4,21 +4,32 @@ import { OrbitControls, useGLTF } from '@react-three/drei';
 import { Suspense } from 'react';
 
 function Model() {
-  // Using a well-known 3D model that should load reliably
-  const { scene } = useGLTF("https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/robot-playground/model.gltf");
-  return <primitive object={scene} scale={2} position={[0, -2, 0]} />;
+  // Using a reliable 3D model source that works well with R3F
+  const { scene } = useGLTF("https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/suzanne/model.gltf");
+  
+  return <primitive object={scene} scale={1.5} position={[0, -0.5, 0]} />;
+}
+
+// Error boundary for 3D content
+function FallbackContent() {
+  return (
+    <mesh>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color="blue" />
+    </mesh>
+  );
 }
 
 export function Animated3DModel() {
   return (
     <div className="h-[300px] w-full rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-sm border border-white/10">
       <Canvas
-        camera={{ position: [0, 0, 8], fov: 50 }}
+        camera={{ position: [0, 0, 5], fov: 50 }}
         className="w-full h-full"
       >
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
-        <Suspense fallback={null}>
+        <Suspense fallback={<FallbackContent />}>
           <Model />
           <OrbitControls
             autoRotate
