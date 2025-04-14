@@ -60,7 +60,7 @@ const initialThreads = [
   }
 ];
 
-const Index = () => {
+const IndexPage = () => {
   const [threadFeed, setThreadFeed] = useState(initialThreads);
 
   // Load threads from localStorage on component mount
@@ -148,4 +148,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default IndexPage;

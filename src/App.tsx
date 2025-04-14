@@ -14,7 +14,7 @@ function NotificationServiceWrapper({ children }: { children: React.ReactNode })
 }
 
 // Lazy loaded components with proper error handling
-const Index = lazy(() => import("./pages/index"));
+const IndexPage = lazy(() => import("./pages/index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ThreadPage = lazy(() => import("./pages/ThreadPage"));
 const CreateThread = lazy(() => import("./pages/CreateThread"));
@@ -49,7 +49,7 @@ const App = () => (
               </div>
             }>
               <Routes>
-                <Route path="/" element={<Index />} />
+                <Route path="/" element={<IndexPage />} />
                 <Route path="/thread/:threadId" element={<ThreadPage />} />
                 <Route path="/create" element={<CreateThread />} />
                 <Route path="/bookmarks" element={<BookmarksPage />} />
