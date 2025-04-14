@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { Heart, Bookmark, MessageSquare, Share2, MoreHorizontal } from "lucide-react";
-import { useCursor } from "@/providers/cursor-provider";
 import { cn } from "@/lib/utils";
 import { animateElement } from "@/lib/animation";
 
@@ -26,7 +25,6 @@ export function Thread({ id, author, content, createdAt, likes, replies, images,
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
-  const { setCursorType } = useCursor();
   
   const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsLiked(!isLiked);
@@ -49,8 +47,6 @@ export function Thread({ id, author, content, createdAt, likes, replies, images,
         "bg-card rounded-xl border border-white/10 p-4 mb-4 transition-all hover:bg-card/80", 
         className
       )}
-      onMouseEnter={() => setCursorType("dot")}
-      onMouseLeave={() => setCursorType("default")}
     >
       <div className="flex gap-3">
         <Link to={`/profile/${author.username}`} className="flex-shrink-0">
@@ -74,7 +70,7 @@ export function Thread({ id, author, content, createdAt, likes, replies, images,
               </span>
             </div>
             
-            <button className="text-gray-400 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors interactive">
+            <button className="text-gray-400 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors">
               <MoreHorizontal size={18} />
             </button>
           </div>
@@ -105,7 +101,7 @@ export function Thread({ id, author, content, createdAt, likes, replies, images,
           <div className="flex justify-between text-gray-400 pt-2">
             <Link 
               to={`/thread/${id}`}
-              className="flex items-center gap-1 hover:text-blue transition-colors interactive"
+              className="flex items-center gap-1 hover:text-blue transition-colors"
             >
               <MessageSquare size={18} />
               <span className="text-sm">{replies}</span>
@@ -114,7 +110,7 @@ export function Thread({ id, author, content, createdAt, likes, replies, images,
             <button 
               onClick={handleLike}
               className={cn(
-                "flex items-center gap-1 transition-colors interactive",
+                "flex items-center gap-1 transition-colors",
                 isLiked ? "text-red-500" : "hover:text-red-500"
               )}
             >
@@ -125,14 +121,14 @@ export function Thread({ id, author, content, createdAt, likes, replies, images,
             <button 
               onClick={handleBookmark}
               className={cn(
-                "flex items-center gap-1 transition-colors interactive",
+                "flex items-center gap-1 transition-colors",
                 isBookmarked ? "text-blue" : "hover:text-blue"
               )}
             >
               <Bookmark size={18} fill={isBookmarked ? "currentColor" : "none"} />
             </button>
             
-            <button className="flex items-center gap-1 hover:text-blue transition-colors interactive">
+            <button className="flex items-center gap-1 hover:text-blue transition-colors">
               <Share2 size={18} />
             </button>
           </div>

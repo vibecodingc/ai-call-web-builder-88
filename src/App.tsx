@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -5,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Lazy loaded components
+// Lazy loaded components with proper error handling
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ThreadPage = lazy(() => import("./pages/ThreadPage"));
@@ -32,7 +33,7 @@ const App = () => (
       <BrowserRouter>
         <Suspense fallback={
           <div className="flex h-screen w-screen items-center justify-center bg-navy">
-            <div className="text-blue animate-pulse">Loading...</div>
+            <div className="text-blue animate-pulse text-xl font-bold">Loading...</div>
           </div>
         }>
           <Routes>

@@ -11,7 +11,6 @@ import { ForumFooter } from "@/components/forum-footer";
 import { ThreadCreator } from "@/components/ui/thread-creator";
 import { Thread } from "@/components/ui/thread";
 import "../forum.css";
-import "../cursor.css";
 
 // Initial mock thread data for demonstration
 const initialThreads = [
@@ -109,13 +108,17 @@ const Index = () => {
       
       <div className="container mx-auto px-4 py-16">
         <div className="mb-12">
-          <h2 className="text-section-mobile md:text-section mb-6">Latest Threads</h2>
-          <ThreadCreator />
-          
-          <div className="mt-8 space-y-4">
-            {threadFeed.map(thread => (
-              <Thread key={thread.id} {...thread} />
-            ))}
+          <h2 className="text-section-mobile md:text-section mb-6 bg-gradient-to-r from-blue to-purple-400 bg-clip-text text-transparent animate-fade-in-down">Latest Threads</h2>
+          <div className="animate-fade-in-up">
+            <ThreadCreator />
+            
+            <div className="mt-8 space-y-4">
+              {threadFeed.map((thread, index) => (
+                <div key={thread.id} className={`animate-fade-in-up`} style={{ animationDelay: `${index * 0.1}s` }}>
+                  <Thread {...thread} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
