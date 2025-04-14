@@ -2,12 +2,16 @@
 import React, { useState } from "react";
 import { ButtonGradient } from "./button-gradient";
 import { Image, Smile, AtSign, Hash, Paperclip } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 export function ThreadCreator() {
   const [content, setContent] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -24,15 +28,42 @@ export function ThreadCreator() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call
+    // Simulate API call (in a real app, this would be an actual API request)
     setTimeout(() => {
+      // Generate a mock thread
+      const newThread = {
+        id: `thread-${Date.now()}`,
+        author: {
+          name: "Current User",
+          avatar: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=80&q=80",
+          username: "currentuser",
+        },
+        content: content,
+        createdAt: new Date(),
+        likes: 0,
+        replies: 0,
+        images: imagePreviewUrls
+      };
+
+      // In a real app, we would save the thread to a database
+      console.log("Thread created:", newThread);
+      
+      // Reset form
       setContent("");
       setImages([]);
       setImagePreviewUrls([]);
       setIsSubmitting(false);
       
-      // In real implementation, this would be where we save the thread to a database
-      console.log("Thread created:", { content, images });
+      // Show success message
+      toast({
+        title: "Success!",
+        description: "Your thread has been posted.",
+      });
+
+      // If we're on the create page, navigate back to home
+      if (window.location.pathname === "/create") {
+        navigate("/");
+      }
     }, 1000);
   };
 

@@ -32,8 +32,8 @@ export function Thread({ id, author, content, createdAt, likes, replies, images,
     setIsLiked(!isLiked);
     setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
     
-    // Animate the heart icon
-    const target = e.currentTarget.querySelector("svg") as HTMLElement;
+    // Fix the type error by casting SVGSVGElement to unknown first, then to HTMLElement
+    const target = e.currentTarget.querySelector("svg") as unknown as HTMLElement;
     if (target) {
       animateElement(target, isLiked ? "vote-decrease" : "vote-increase", 800);
     }

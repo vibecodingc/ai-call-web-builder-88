@@ -5,6 +5,7 @@ import { BadgeUserCount } from "@/components/ui/badge-user-count";
 import { ForumChatBox } from "@/components/ui/forum-chat-box";
 import { Search } from "lucide-react";
 import { createRevealClass } from "@/lib/animation";
+import { Link } from "react-router-dom";
 
 export function ForumHeroSection() {
   return (
@@ -32,7 +33,9 @@ export function ForumHeroSection() {
                   </button>
                 </div>
               </div>
-              <ButtonGradient withArrow size="lg">Create Thread</ButtonGradient>
+              <Link to="/create">
+                <ButtonGradient withArrow size="lg">Create Thread</ButtonGradient>
+              </Link>
             </div>
             
             <div className="flex items-center gap-2 reveal reveal-up active delay-1500">

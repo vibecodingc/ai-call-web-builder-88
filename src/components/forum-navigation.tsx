@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ButtonGradient } from "@/components/ui/button-gradient";
 import { cn } from "@/lib/utils";
 import { MessageSquare, Menu, X, Bell, Search, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const menuItems = [
   { name: "Forum", href: "/" },
@@ -35,22 +36,22 @@ export function ForumNavigation() {
       )}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <a href="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <MessageSquare className="w-8 h-8 text-blue mr-2" />
           <span className="font-bold text-xl">ForumHub</span>
-        </a>
+        </Link>
 
         {/* Desktop menu */}
         <nav className="hidden md:flex items-center space-x-6">
           <ul className="flex space-x-6">
             {menuItems.map((item) => (
               <li key={item.name}>
-                <a
-                  href={item.href}
+                <Link
+                  to={item.href}
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   {item.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -68,7 +69,9 @@ export function ForumNavigation() {
             </button>
           </div>
           
-          <ButtonGradient>New Thread</ButtonGradient>
+          <Link to="/create">
+            <ButtonGradient>New Thread</ButtonGradient>
+          </Link>
         </nav>
 
         {/* Mobile menu button */}
@@ -99,18 +102,20 @@ export function ForumNavigation() {
           <ul className="flex flex-col space-y-4 mb-6">
             {menuItems.map((item) => (
               <li key={item.name}>
-                <a
-                  href={item.href}
+                <Link
+                  to={item.href}
                   className="text-gray-300 hover:text-white block py-2 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
           <div className="flex flex-col gap-4">
-            <ButtonGradient>New Thread</ButtonGradient>
+            <Link to="/create" onClick={() => setMobileMenuOpen(false)}>
+              <ButtonGradient className="w-full">New Thread</ButtonGradient>
+            </Link>
             <button className="text-gray-300 hover:text-white flex items-center gap-2 p-2">
               <User className="w-5 h-5" />
               <span>Profile</span>

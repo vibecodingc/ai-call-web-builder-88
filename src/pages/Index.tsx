@@ -1,5 +1,5 @@
 
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { ForumNavigation } from "@/components/forum-navigation";
 import { ForumHeroSection } from "@/components/forum-hero-section";
 import { ForumCategoriesSection } from "@/components/forum-categories-section";
@@ -13,8 +13,8 @@ import { Thread } from "@/components/ui/thread";
 import "../forum.css";
 import "../cursor.css";
 
-// Mock thread data for demonstration
-const threadFeed = [
+// Initial mock thread data for demonstration
+const initialThreads = [
   {
     id: "123",
     author: {
@@ -62,6 +62,13 @@ const threadFeed = [
 ];
 
 const Index = () => {
+  const [threadFeed, setThreadFeed] = useState(initialThreads);
+
+  // Add a new thread to the feed (will be used by the ThreadCreator)
+  const addNewThread = (thread: any) => {
+    setThreadFeed(prevThreads => [thread, ...prevThreads]);
+  };
+
   // Optimized intersection observer for animations
   const setupAnimations = useCallback(() => {
     const observer = new IntersectionObserver((entries) => {
