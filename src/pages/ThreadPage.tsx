@@ -6,6 +6,7 @@ import { ForumFooter } from "@/components/forum-footer";
 import { Thread } from "@/components/ui/thread";
 import { CardPost } from "@/components/ui/card-post";
 import { ThreadCreator } from "@/components/ui/thread-creator";
+import { Post } from "@/lib/forum-types";
 
 // Mock data for demonstration
 const threadData = {
@@ -25,7 +26,7 @@ const threadData = {
 };
 
 // Mock replies data
-const replies = [
+const replies: Post[] = [
   {
     id: "reply1",
     threadId: "123",
@@ -33,6 +34,7 @@ const replies = [
     author: {
       id: "user1",
       name: "Jordan Lee",
+      username: "jordanlee", // Added username
       avatarUrl: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=80&q=80",
       joinDate: new Date(2024, 1, 15),
       postCount: 120
@@ -50,6 +52,7 @@ const replies = [
     author: {
       id: "user2",
       name: "Taylor Kim",
+      username: "taylorkim", // Added username
       avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80",
       joinDate: new Date(2023, 8, 5),
       postCount: 346

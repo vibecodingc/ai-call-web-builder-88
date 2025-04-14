@@ -1,4 +1,3 @@
-
 import { Category, Thread, Post, User } from "./forum-types";
 
 // Mock users
@@ -6,6 +5,7 @@ export const users: User[] = [
   {
     id: "1",
     name: "Alex Johnson",
+    username: "alexjohnson",
     avatarUrl: "/placeholder.svg",
     joinDate: new Date("2023-01-15"),
     postCount: 342
@@ -13,6 +13,7 @@ export const users: User[] = [
   {
     id: "2",
     name: "Taylor Smith",
+    username: "taylorsmith",
     avatarUrl: "/placeholder.svg",
     joinDate: new Date("2023-02-20"),
     postCount: 156
@@ -20,6 +21,7 @@ export const users: User[] = [
   {
     id: "3",
     name: "Jordan Lee",
+    username: "jordanlee",
     avatarUrl: "/placeholder.svg",
     joinDate: new Date("2023-03-10"),
     postCount: 275
@@ -27,6 +29,7 @@ export const users: User[] = [
   {
     id: "4",
     name: "Casey Morgan",
+    username: "caseymorgan",
     avatarUrl: "/placeholder.svg",
     joinDate: new Date("2023-04-05"),
     postCount: 89
