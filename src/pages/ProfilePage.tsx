@@ -42,7 +42,7 @@ const mockUser = {
   ]
 };
 
-// Mock threads data 
+// Updated mock threads data with more variety
 const userThreads = [
   {
     id: "123",
@@ -72,6 +72,65 @@ const userThreads = [
     replies: 12,
     images: []
   },
+  {
+    id: "789",
+    author: {
+      name: mockUser.name,
+      avatar: mockUser.avatarUrl,
+      username: mockUser.username,
+    },
+    content: "🎨 Just completed my first UI/UX case study! Working on a mobile banking app redesign. Here's a sneak peek of the prototype. Would love your feedback on the interaction design!",
+    createdAt: new Date(2025, 3, 6),
+    likes: 89,
+    replies: 34,
+    images: [
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    id: "101",
+    author: {
+      name: mockUser.name,
+      avatar: mockUser.avatarUrl,
+      username: mockUser.username,
+    },
+    content: "💡 Quick tip: When designing forms, always consider the error states and validation feedback. It's often overlooked but crucial for UX. Here's an example of good vs bad form validation:",
+    createdAt: new Date(2025, 3, 4),
+    likes: 156,
+    replies: 28,
+    images: [
+      "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    id: "102",
+    author: {
+      name: mockUser.name,
+      avatar: mockUser.avatarUrl,
+      username: mockUser.username,
+    },
+    content: "Excited to share that I'll be speaking at the upcoming Web Design Summit 2025! My talk will cover 'The Future of Interactive Web Experiences'. Who else is attending? Let's connect! 🎤✨",
+    createdAt: new Date(2025, 3, 2),
+    likes: 203,
+    replies: 45,
+    images: []
+  },
+  {
+    id: "103",
+    author: {
+      name: mockUser.name,
+      avatar: mockUser.avatarUrl,
+      username: mockUser.username,
+    },
+    content: "Starting a new series: 'Design System Deep Dives' 🎨\nThis week: Color Theory in UI Design\n\nA thread on how to create accessible and visually appealing color palettes for your projects...",
+    createdAt: new Date(2025, 2, 28),
+    likes: 167,
+    replies: 56,
+    images: [
+      "https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?auto=format&fit=crop&w=800&q=80"
+    ]
+  }
 ];
 
 // New component for profile header to reduce file size
