@@ -2,18 +2,22 @@
 import React, { useState, useEffect } from "react";
 import { ButtonGradient } from "@/components/ui/button-gradient";
 import { cn } from "@/lib/utils";
-import { MessageSquare, Menu, X, Bell } from "lucide-react";
+import { MessageSquare, Menu, X, Sun, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTheme } from "@/contexts/ThemeContext";
+import { NotificationsDropdown } from "@/components/ui/notifications-dropdown";
 
 const menuItems = [
   { name: "Home", href: "/" },
   { name: "Popular", href: "/popular" },
+  { name: "Categories", href: "/categories" },
   { name: "Bookmarks", href: "/bookmarks" },
 ];
 
 export function ForumNavigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,10 +59,23 @@ export function ForumNavigation() {
           </ul>
           
           <div className="flex items-center gap-4 pl-4 border-l border-white/10">
-            <button className="text-gray-300 hover:text-white relative group">
-              <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 bg-blue rounded-full w-4 h-4 text-xs flex items-center justify-center group-hover:bg-blue-light transition-colors">3</span>
+            <button 
+              className="text-gray-300 hover:text-white transition-colors"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
+            
+            <NotificationsDropdown />
+            
+            <Link to="/profile" className="flex items-center">
+              <img 
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=40&h=40&q=80" 
+                alt="Profile" 
+                className="w-8 h-8 rounded-full border border-white/20 hover:border-blue transition-colors"
+              />
+            </Link>
           </div>
           
           <Link to="/create">
@@ -68,6 +85,16 @@ export function ForumNavigation() {
 
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center gap-4">
+          <button
+            onClick={toggleTheme}
+            className="p-2 text-gray-300"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+          
+          <NotificationsDropdown />
+          
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-white p-2"
@@ -97,6 +124,16 @@ export function ForumNavigation() {
               </li>
             ))}
           </ul>
+          <div className="flex items-center gap-4 py-2 mb-4 border-t border-b border-white/10">
+            <Link to="/profile" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
+              <img 
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=40&h=40&q=80" 
+                alt="Profile" 
+                className="w-8 h-8 rounded-full border border-white/20"
+              />
+              <span className="ml-2">My Profile</span>
+            </Link>
+          </div>
           <Link to="/create" onClick={() => setMobileMenuOpen(false)}>
             <ButtonGradient className="w-full">New Thread</ButtonGradient>
           </Link>
