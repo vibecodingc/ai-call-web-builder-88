@@ -60,7 +60,7 @@ const initialThreads = [
   }
 ];
 
-const IndexPage = () => {
+const Index = () => {
   const [threadFeed, setThreadFeed] = useState(initialThreads);
 
   // Load threads from localStorage on component mount
@@ -83,36 +83,35 @@ const IndexPage = () => {
     }
   }, []);
 
-  // Setup animations function
+  // Add a new thread to the feed (will be used by the ThreadCreator)
+  const addNewThread = (thread: any) => {
+    setThreadFeed(prevThreads => [thread, ...prevThreads]);
+  };
+
+  // Optimized intersection observer for animations
   const setupAnimations = useCallback(() => {
-    try {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          // Add active class when element is in view
-          if (entry.isIntersecting) {
-            requestAnimationFrame(() => {
-              entry.target.classList.add('active');
-            });
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { 
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Add active class when element is in view
+        if (entry.isIntersecting) {
+          requestAnimationFrame(() => {
+            entry.target.classList.add('active');
+          });
+          observer.unobserve(entry.target);
+        }
       });
-      
-      // Get all elements to be animated
-      const animatedElements = document.querySelectorAll('.reveal');
-      animatedElements.forEach(el => {
-        observer.observe(el);
-      });
-      
-      return () => observer.disconnect();
-    } catch (error) {
-      console.error('Animation setup error:', error);
-      // Return empty function as fallback
-      return () => {};
-    }
+    }, { 
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    // Get all elements to be animated
+    const animatedElements = document.querySelectorAll('.reveal');
+    animatedElements.forEach(el => {
+      observer.observe(el);
+    });
+    
+    return () => observer.disconnect();
   }, []);
 
   // Set up animations when component mounts
@@ -154,4 +153,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default Index;
